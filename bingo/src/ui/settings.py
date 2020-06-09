@@ -10,7 +10,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Balls(object):
+class Ui_Settings(object):
     def setupUi(self, Balls):
         Balls.setObjectName("Balls")
         Balls.resize(400, 299)

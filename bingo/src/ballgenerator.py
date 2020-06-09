@@ -18,4 +18,7 @@ class BallGenerator:
         balls = list(range(self.lower_limit, self.upper_limit + 1))
         sample = random.sample(balls, picked_balls)
         for ball in sample:
-            yield f"{str(ball)} {self.bingo_codes[int(ball) - 1]}"
+            try:
+                yield f"{str(ball)} {self.bingo_codes[int(ball) - 1]}"
+            except Exception:
+                yield f"{str(ball)}"
