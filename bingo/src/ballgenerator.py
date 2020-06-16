@@ -2,6 +2,11 @@ from os import path
 import csv
 import random
 
+class BingoBall:
+    def __init__(self, ball, code=None):
+        self.value = ball
+        self.code = code
+
 class BallGenerator:
     def __init__(self, limits):
         (self.lower_limit, self.upper_limit) = limits
@@ -18,7 +23,8 @@ class BallGenerator:
         balls = list(range(self.lower_limit, self.upper_limit + 1))
         sample = random.sample(balls, picked_balls)
         for ball in sample:
+
             try:
-                yield f"{str(ball)} {self.bingo_codes[int(ball) - 1]}"
+                yield BingoBall(ball, self.bingo_codes[int(ball) - 1])
             except Exception:
-                yield f"{str(ball)}"
+                yield BingoBall(ball)
