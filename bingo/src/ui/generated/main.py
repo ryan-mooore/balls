@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'bingo/src/ui/main.ui'
+# Form implementation generated from reading ui file 'src/main.ui'
 #
 # Created by: PyQt5 UI code generator 5.14.2
 #
@@ -103,7 +103,7 @@ class Ui_MainWindow(object):
 "border: 0px;")
         self.back_2.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("bingo/src/ui/../../resources/arrow-left-circle.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("src/../../../resources/icons/buttons/back.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.back_2.setIcon(icon)
         self.back_2.setIconSize(QtCore.QSize(32, 32))
         self.back_2.setObjectName("back_2")
@@ -113,7 +113,7 @@ class Ui_MainWindow(object):
 "border: 0px;")
         self.settings_3.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("bingo/src/ui/../../resources/settings.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap("src/../../../resources/icons/buttons/settings.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.settings_3.setIcon(icon1)
         self.settings_3.setIconSize(QtCore.QSize(32, 32))
         self.settings_3.setObjectName("settings_3")
@@ -132,7 +132,7 @@ class Ui_MainWindow(object):
 "border: 0px;")
         self.back.setText("")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("bingo/src/ui/../../resources/chevron-left.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap("src/../../../resources/icons/buttons/previous.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.back.setIcon(icon2)
         self.back.setIconSize(QtCore.QSize(32, 32))
         self.back.setObjectName("back")
@@ -142,7 +142,7 @@ class Ui_MainWindow(object):
 "border: 0px;")
         self.forward.setText("")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("bingo/src/ui/../../resources/chevron-right.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap("src/../../../resources/icons/buttons/next.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.forward.setIcon(icon3)
         self.forward.setIconSize(QtCore.QSize(32, 32))
         self.forward.setObjectName("forward")
@@ -152,7 +152,7 @@ class Ui_MainWindow(object):
 "border: 0px;")
         self.newDraw.setText("")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("bingo/src/ui/../../resources/plus.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap("src/../../../resources/icons/buttons/new.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.newDraw.setIcon(icon4)
         self.newDraw.setIconSize(QtCore.QSize(32, 32))
         self.newDraw.setObjectName("newDraw")
@@ -167,7 +167,7 @@ class Ui_MainWindow(object):
 "border: 0px;")
         self.recall.setText("")
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("bingo/src/ui/../../resources/refresh-ccw.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon5.addPixmap(QtGui.QPixmap("src/../../../resources/icons/buttons/recall.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.recall.setIcon(icon5)
         self.recall.setIconSize(QtCore.QSize(32, 32))
         self.recall.setObjectName("recall")

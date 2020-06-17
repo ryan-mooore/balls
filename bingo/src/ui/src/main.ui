@@ -223,7 +223,7 @@ border: 0px;</string>
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>../../resources/arrow-left-circle.svg</normaloff>../../resources/arrow-left-circle.svg</iconset>
+            <normaloff>../../../resources/icons/buttons/back.svg</normaloff>../../../resources/icons/buttons/back.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -244,7 +244,7 @@ border: 0px;</string>
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>../../resources/settings.svg</normaloff>../../resources/settings.svg</iconset>
+            <normaloff>../../../resources/icons/buttons/settings.svg</normaloff>../../../resources/icons/buttons/settings.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -302,7 +302,7 @@ border: 0px;</string>
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../resources/chevron-left.svg</normaloff>../../resources/chevron-left.svg</iconset>
+          <normaloff>../../../resources/icons/buttons/previous.svg</normaloff>../../../resources/icons/buttons/previous.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -323,7 +323,7 @@ border: 0px;</string>
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../resources/chevron-right.svg</normaloff>../../resources/chevron-right.svg</iconset>
+          <normaloff>../../../resources/icons/buttons/next.svg</normaloff>../../../resources/icons/buttons/next.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -344,7 +344,7 @@ border: 0px;</string>
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../resources/plus.svg</normaloff>../../resources/plus.svg</iconset>
+          <normaloff>../../../resources/icons/buttons/new.svg</normaloff>../../../resources/icons/buttons/new.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -371,7 +371,7 @@ border: 0px;</string>
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../resources/refresh-ccw.svg</normaloff>../../resources/refresh-ccw.svg</iconset>
+          <normaloff>../../../resources/icons/buttons/recall.svg</normaloff>../../../resources/icons/buttons/recall.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
