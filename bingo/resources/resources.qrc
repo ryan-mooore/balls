@@ -1,0 +1,15 @@
+<RCC>
+  <qresource prefix="status-dots">
+    <file>icons/status-dots/not-drawn.svg</file>
+    <file>icons/status-dots/drawn.svg</file>
+    <file>icons/status-dots/current.svg</file>
+  </qresource>
+  <qresource prefix="buttons">
+    <file>icons/buttons/settings.svg</file>
+    <file>icons/buttons/recall.svg</file>
+    <file>icons/buttons/previous.svg</file>
+    <file>icons/buttons/next.svg</file>
+    <file>icons/buttons/new.svg</file>
+    <file>icons/buttons/back.svg</file>
+  </qresource>
+</RCC>

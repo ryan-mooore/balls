@@ -1,6 +1,6 @@
-Add tooltips
-refactor
 add history
 animations?
-be able to disable bingo codes
-taborder on dialog
+pass testing
+disable buttons?
+
+pyuic5 -x [FILENAME].ui -o [FILENAME].py
