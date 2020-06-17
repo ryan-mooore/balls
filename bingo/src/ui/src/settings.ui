@@ -33,6 +33,9 @@
         <property name="wrapping">
          <bool>false</bool>
         </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
         <property name="maximum">
          <number>90</number>
         </property>
@@ -42,7 +45,11 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QSpinBox" name="range_min"/>
+       <widget class="QSpinBox" name="range_min">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+       </widget>
       </item>
       <item row="0" column="0">
        <widget class="QLabel" name="amountOfBallsLabel">
@@ -98,6 +105,9 @@
       </item>
       <item>
        <widget class="QSpinBox" name="sample">
+        <property name="minimum">
+         <number>1</number>
+        </property>
         <property name="maximum">
          <number>90</number>
         </property>
@@ -146,6 +156,12 @@
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>range_min</tabstop>
+  <tabstop>range_max</tabstop>
+  <tabstop>sample</tabstop>
+  <tabstop>checkBox</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

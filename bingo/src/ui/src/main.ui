@@ -115,6 +115,9 @@
               <bold>true</bold>
              </font>
             </property>
+            <property name="toolTip">
+             <string>Bingo code</string>
+            </property>
             <property name="styleSheet">
              <string notr="true">color: rgb(250, 128, 125);</string>
             </property>
@@ -152,6 +155,9 @@
                 <italic>false</italic>
                 <bold>true</bold>
                </font>
+              </property>
+              <property name="toolTip">
+               <string>Bingo ball</string>
               </property>
               <property name="layoutDirection">
                <enum>Qt::LeftToRight</enum>
@@ -214,6 +220,9 @@ background: #fa807d;</string>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="toolTip">
+           <string>Go back to previous ball pool</string>
+          </property>
           <property name="styleSheet">
            <string notr="true">color: none;
 border: 0px;</string>
@@ -235,6 +244,12 @@ border: 0px;</string>
         </item>
         <item>
          <widget class="QPushButton" name="settings_3">
+          <property name="acceptDrops">
+           <bool>false</bool>
+          </property>
+          <property name="toolTip">
+           <string>Settings</string>
+          </property>
           <property name="styleSheet">
            <string notr="true">color: none;
 border: 0px;</string>
@@ -292,7 +307,34 @@ border: 0px;</string>
        <number>10</number>
       </property>
       <item>
+       <widget class="QPushButton" name="newDraw">
+        <property name="toolTip">
+         <string>New ball pool</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: none;
+border: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../resources/icons/buttons/new.svg</normaloff>../../../resources/icons/buttons/new.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="back">
+        <property name="toolTip">
+         <string>Previous ball draw</string>
+        </property>
         <property name="styleSheet">
          <string notr="true">color: none;
 border: 0px;</string>
@@ -314,6 +356,9 @@ border: 0px;</string>
       </item>
       <item>
        <widget class="QPushButton" name="forward">
+        <property name="toolTip">
+         <string>Next ball draw</string>
+        </property>
         <property name="styleSheet">
          <string notr="true">color: none;
 border: 0px;</string>
@@ -334,25 +379,20 @@ border: 0px;</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="newDraw">
-        <property name="styleSheet">
-         <string notr="true">color: none;
-border: 0px;</string>
+       <spacer name="horizontalSpacer_5">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
-        <property name="text">
-         <string/>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
         </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>../../../resources/icons/buttons/new.svg</normaloff>../../../resources/icons/buttons/new.svg</iconset>
-        </property>
-        <property name="iconSize">
+        <property name="sizeHint" stdset="0">
          <size>
-          <width>32</width>
-          <height>32</height>
+          <width>10</width>
+          <height>20</height>
          </size>
         </property>
-       </widget>
+       </spacer>
       </item>
       <item>
        <widget class="QPushButton" name="recall">
@@ -361,6 +401,9 @@ border: 0px;</string>
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Recall (go to first ball draw)</string>
         </property>
         <property name="styleSheet">
          <string notr="true">color: none;
@@ -372,6 +415,46 @@ border: 0px;</string>
         <property name="icon">
          <iconset>
           <normaloff>../../../resources/icons/buttons/recall.svg</normaloff>../../../resources/icons/buttons/recall.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_6">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>15</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="delete_2">
+        <property name="toolTip">
+         <string>Delete ball pool</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: none;
+border: 0px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../../resources/icons/buttons/delete.svg</normaloff>../../../resources/icons/buttons/delete.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -416,6 +499,9 @@ border: 0px;</string>
           <bold>true</bold>
          </font>
         </property>
+        <property name="toolTip">
+         <string>Current viewing mode</string>
+        </property>
         <property name="styleSheet">
          <string notr="true">background-color: #fa807d;
 border-radius: 15px;
@@ -449,7 +535,6 @@ margin-top: 0</string>
  <tabstops>
   <tabstop>back</tabstop>
   <tabstop>forward</tabstop>
-  <tabstop>newDraw</tabstop>
   <tabstop>recall</tabstop>
   <tabstop>settings_3</tabstop>
   <tabstop>back_2</tabstop>

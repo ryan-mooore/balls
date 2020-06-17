@@ -25,11 +25,13 @@ class Ui_Balls(object):
         self.gridLayout.setObjectName("gridLayout")
         self.range_max = QtWidgets.QSpinBox(self.verticalLayoutWidget)
         self.range_max.setWrapping(False)
+        self.range_max.setMinimum(1)
         self.range_max.setMaximum(90)
         self.range_max.setProperty("value", 90)
         self.range_max.setObjectName("range_max")
         self.gridLayout.addWidget(self.range_max, 1, 1, 1, 1)
         self.range_min = QtWidgets.QSpinBox(self.verticalLayoutWidget)
+        self.range_min.setMinimum(1)
         self.range_min.setObjectName("range_min")
         self.gridLayout.addWidget(self.range_min, 1, 0, 1, 1)
         self.amountOfBallsLabel = QtWidgets.QLabel(self.verticalLayoutWidget)
@@ -58,6 +60,7 @@ class Ui_Balls(object):
         self.label_2.setObjectName("label_2")
         self.horizontalLayout.addWidget(self.label_2)
         self.sample = QtWidgets.QSpinBox(self.verticalLayoutWidget)
+        self.sample.setMinimum(1)
         self.sample.setMaximum(90)
         self.sample.setProperty("value", 8)
         self.sample.setObjectName("sample")
@@ -84,6 +87,9 @@ class Ui_Balls(object):
         self.buttonBox.accepted.connect(Balls.accept)
         self.buttonBox.rejected.connect(Balls.reject)
         QtCore.QMetaObject.connectSlotsByName(Balls)
+        Balls.setTabOrder(self.range_min, self.range_max)
+        Balls.setTabOrder(self.range_max, self.sample)
+        Balls.setTabOrder(self.sample, self.checkBox)
 
     def retranslateUi(self, Balls):
         _translate = QtCore.QCoreApplication.translate
