@@ -1,0 +1,6 @@
+Add tooltips
+refactor
+add history
+animations?
+be able to disable bingo codes
+taborder on dialog

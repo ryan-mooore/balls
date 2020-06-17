@@ -1,17 +1,24 @@
+# Ryan Moore - AS91986
+# 15/06/20
+# Bingo Generator
+# Version 2.0.0
+
+
 import sys
 import csv
-from PyQt5.QtWidgets import QApplication, QDialog, QLabel, QPushButton, QMainWindow, QSpacerItem
-from PyQt5 import QtCore
 from enum import Enum
 
-from ballgenerator import BallGenerator
-
-from ui import main, settings
 from PyQt5.QtGui import QPixmap
-# from PyQt5.QtCore.Qt import WA_DeleteOnClose
+from PyQt5.QtWidgets import \
+    QApplication, QDialog, QLabel, QPushButton, QMainWindow
+from PyQt5 import QtCore
+
+from ballgenerator import BallGenerator
+from ui import main, settings
+
+__version__ = '2.0.0'
 
 codes = "../resources/bingo.csv"
-
 app = QApplication(sys.argv)
 
 
@@ -20,17 +27,19 @@ class Pixmaps(Enum):
     CURRENT = QPixmap("bingo/resources/current.svg")
     NOT_DRAWN = QPixmap("bingo/resources/not-drawn.svg")
 
+
 class SettingsWindow(QDialog):
     def __init__(self, parent=None):
         super().__init__()
-        
+
         self.ui = settings.Ui_Balls()
         self.ui.setupUi(self)
+
 
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super().__init__()
-        
+
         self.ui = main.Ui_MainWindow()
         self.ui.setupUi(self)
 
@@ -46,50 +55,19 @@ class MainWindow(QMainWindow):
         self.ui.back.clicked.connect(self.prev_ball)
         self.ui.recall.clicked.connect(self.recall)
 
-    
     @QtCore.pyqtSlot()
     def settings(self):
         self.settings_window.exec()
         self._load_settings()
 
-        self.ui.statusBar.showMessage("Settings edited. Changes will apply for next ball pool", 3000)
-
+        self.ui.statusBar.showMessage(
+            "Settings edited. Changes will apply for next ball pool", 3000
+        )
 
     @QtCore.pyqtSlot()
     def recall(self):
         self.current_ball_index = 0
         self._paint_balls()
-
-
-    def _load_settings(self):
-        self.balls_min = int(self.settings_window.ui.range_min.value())
-        self.balls_max = int(self.settings_window.ui.range_max.value())
-        self.balls_sample = int(self.settings_window.ui.sample.value())
-        # self.show_bingo_codes = self.settings_window.ui.checkBox.value()
-
-        #if self.show_bingo_codes:
-        #    self.ui.ballName.hide()
-        # else:
-        #    self.ui.ballName.show()
-
-    def _paint_balls(self):
-        self.ui.ballNumber.setText(str(self.this_sample[self.current_ball_index].value))
-        self.ui.ballName.setText(str(self.this_sample[self.current_ball_index].code))
-
-        self.ui.statusBar.clearMessage()
-
-        for index in range(self.ui.drawnBallContainer.count()):
-            icon = self.ui.drawnBallContainer.itemAt(index).widget()
-            if index <= self.drawn_number:
-                if index == self.current_ball_index:
-                    icon.setPixmap(Pixmaps.CURRENT.value)
-                    self.ui.modeText.setText("Current")
-                else:
-                    icon.setPixmap(Pixmaps.DRAWN.value)
-                    self.ui.modeText.setText("Recall")
-            else:
-                icon.setPixmap(Pixmaps.NOT_DRAWN.value)
-
 
     @QtCore.pyqtSlot()
     def new_ball_pool(self):
@@ -98,7 +76,8 @@ class MainWindow(QMainWindow):
         self.ui.ballName.show()
         container = self.ui.drawnBallContainer
 
-        # use setParent to delete old widgets (once a widget has no parent it is deleted)
+        # use setParent to delete old widgets
+        # (once a widget has no parent it is deleted)
         for index in reversed(range(container.count())):
             container.itemAt(index).widget().setParent(None)
 
@@ -120,19 +99,21 @@ class MainWindow(QMainWindow):
 
         self._paint_balls()
 
-
     @QtCore.pyqtSlot()
     def prev_ball(self):
         if self.current_ball_index == 0:
-            self.ui.statusBar.showMessage("Already at the first generated ball", 2000)
+            self.ui.statusBar.showMessage(
+                "Already at the first generated ball", 2000
+            )
             return
-        
+
         try:
             self.current_ball_index -= 1
             self._paint_balls()
         except AttributeError:
-            self.ui.statusBar.showMessage("Cannot go to previous ball; no ball pool!", 2000)
-
+            self.ui.statusBar.showMessage(
+                "Cannot go to previous ball; no ball pool!", 2000
+            )
 
     @QtCore.pyqtSlot()
     def next_ball(self):
@@ -144,16 +125,44 @@ class MainWindow(QMainWindow):
         except IndexError:
             self.current_ball_index -= 1
             self.drawn_number -= 1
-            self.ui.statusBar.showMessage("Already at the last generated ball", 2000)
+            self.ui.statusBar.showMessage(
+                "Already at the last generated ball", 2000
+            )
         except AttributeError:
-            self.ui.statusBar.showMessage("Cannot go to next ball; no ball pool!", 2000)
+            self.ui.statusBar.showMessage(
+                "Cannot go to next ball; no ball pool!", 2000
+            )
+
+    def _load_settings(self):
+        self.balls_min = int(self.settings_window.ui.range_min.value())
+        self.balls_max = int(self.settings_window.ui.range_max.value())
+        self.balls_sample = int(self.settings_window.ui.sample.value())
+
+    def _paint_balls(self):
+        self.ui.ballNumber.setText(str(
+            self.this_sample[self.current_ball_index].value)
+        )
+        self.ui.ballName.setText(str(
+            self.this_sample[self.current_ball_index].code)
+        )
+
+        self.ui.statusBar.clearMessage()
+
+        for index in range(self.ui.drawnBallContainer.count()):
+            icon = self.ui.drawnBallContainer.itemAt(index).widget()
+            if index <= self.drawn_number:
+                if index == self.current_ball_index:
+                    icon.setPixmap(Pixmaps.CURRENT.value)
+                    self.ui.modeText.setText("Current")
+                else:
+                    icon.setPixmap(Pixmaps.DRAWN.value)
+                    self.ui.modeText.setText("Recall")
+            else:
+                icon.setPixmap(Pixmaps.NOT_DRAWN.value)
+
 
 if __name__ == "__main__":
-
-    bggenerator = None
-
     MainWindow = MainWindow()
-
 
     # start app
     MainWindow.show()
