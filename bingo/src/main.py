@@ -3,9 +3,7 @@
 # Bingo Generator
 # Version 2.0.0
 
-
 import sys
-import csv
 from enum import Enum
 
 from PyQt5.QtGui import QPixmap
@@ -18,43 +16,62 @@ from ui import main, settings
 
 __version__ = '2.0.0'
 
+# path to bingo codes file
 codes = "../resources/bingo.csv"
+
+# create QApplication
 app = QApplication(sys.argv)
 
 
+# create an enum for the pixmaps for the drawn balls
+# status dots (in the top left or the window)
 class Pixmaps(Enum):
     DRAWN = QPixmap("bingo/resources/drawn.svg")
     CURRENT = QPixmap("bingo/resources/current.svg")
     NOT_DRAWN = QPixmap("bingo/resources/not-drawn.svg")
 
 
+# create a class that extends the auto-generated settings window class
 class SettingsWindow(QDialog):
     def __init__(self, parent=None):
+        # initialise the QDialog class
         super().__init__()
 
+        # extend the class to the auto-generated ui
         self.ui = settings.Ui_Balls()
         self.ui.setupUi(self)
 
 
+# create a class that extends the auto-generated main window class
+# this class includes all of its own event slots
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
+        # initialise the QDialog class
         super().__init__()
 
+        # extend the class to the auto-generated ui
         self.ui = main.Ui_MainWindow()
         self.ui.setupUi(self)
 
+        # intialise the ui assets - hide the bingo ball and set
+        # the mode text to "None"
         self.ui.ballName.hide()
         self.ui.ballNumber.hide()
         self.ui.modeText.setText("None")
 
+        # bind the settings window to the main window class and
+        # load the current settings (the defaults in this case)
         self.settings_window = SettingsWindow()
         self._load_settings()
+
+        # connect signals to the slot functions
         self.ui.settings_3.clicked.connect(self.settings)
         self.ui.newDraw.clicked.connect(self.new_ball_pool)
         self.ui.forward.clicked.connect(self.next_ball)
         self.ui.back.clicked.connect(self.prev_ball)
         self.ui.recall.clicked.connect(self.recall)
 
+    # open settings dialog and then save what the user entered
     @QtCore.pyqtSlot()
     def settings(self):
         self.settings_window.exec()
@@ -64,34 +81,41 @@ class MainWindow(QMainWindow):
             "Settings edited. Changes will apply for next ball pool", 3000
         )
 
+    # the recall button sets the currently viewed ball to the first one
     @QtCore.pyqtSlot()
     def recall(self):
         self.current_ball_index = 0
         self._paint_balls()
 
+    # crate a new ball pool with the saved settings
     @QtCore.pyqtSlot()
     def new_ball_pool(self):
-
-        self.ui.ballNumber.show()
-        self.ui.ballName.show()
         container = self.ui.drawnBallContainer
 
-        # use setParent to delete old widgets
+        # use setParent to  set to None to delete all old
+        # drawn balls status dots
         # (once a widget has no parent it is deleted)
         for index in reversed(range(container.count())):
             container.itemAt(index).widget().setParent(None)
 
         self.ui.statusBar.showMessage("Generated new ball pool", 2000)
 
+        # create new ball generator class
         bg = BallGenerator((self.balls_min, self.balls_max))
         bg.set_codes_path(codes)
+
+        # create sample generator using settings values
         self.this_sample = list(bg.generate(self.balls_sample))
 
+        # iterate through the sample and create new status dots
+        # for each ball, assigning the not drawn (grey) pixmap
         for ball in self.this_sample:
             icon = QLabel()
             icon.setPixmap(Pixmaps.NOT_DRAWN.value)
             self.ui.drawnBallContainer.addWidget(icon)
 
+        self.ui.ballNumber.show()
+        self.ui.ballName.show()
         # main_window.ui.drawnBallContainer.addWidget(QSpacerItem())
 
         self.current_ball_index = 0
