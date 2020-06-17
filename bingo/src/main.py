@@ -110,59 +110,80 @@ class MainWindow(QMainWindow):
         # iterate through the sample and create new status dots
         # for each ball, assigning the not drawn (grey) pixmap
         for ball in self.this_sample:
-            icon = QLabel()
-            icon.setPixmap(Pixmaps.NOT_DRAWN.value)
-            self.ui.drawnBallContainer.addWidget(icon)
+            status_dot = QLabel()
+            status_dot.setPixmap(Pixmaps.NOT_DRAWN.value)
+            self.ui.drawnBallContainer.addWidget(status_dot)
 
-        self.ui.ballNumber.show()
-        self.ui.ballName.show()
-        # main_window.ui.drawnBallContainer.addWidget(QSpacerItem())
-
+        # set the current view index and 
+        # the current latest drawn ball to 0
         self.current_ball_index = 0
         self.drawn_number = 0
+        
+        # show the neccesary ui assets
+        self.ui.ballNumber.show()
+        self.ui.ballName.show()
 
+        # finally, render the current ball and the status dots
         self._paint_balls()
 
+    # previous ball button is pressed
     @QtCore.pyqtSlot()
     def prev_ball(self):
+        # test for the first ball already
         if self.current_ball_index == 0:
             self.ui.statusBar.showMessage(
                 "Already at the first generated ball", 2000
             )
             return
 
+        # go to previous ball
         try:
             self.current_ball_index -= 1
             self._paint_balls()
+        # test for ball pool not existing
         except AttributeError:
             self.ui.statusBar.showMessage(
                 "Cannot go to previous ball; no ball pool!", 2000
             )
 
+    # next ball button is pressed
+    # if you're reading this, this bit of code is bad i know
     @QtCore.pyqtSlot()
     def next_ball(self):
         try:
+            # if current view is on the latest ball drawn
+            # increase ball drawn as well as currint view
             if self.drawn_number == self.current_ball_index:
                 self.drawn_number += 1
+
+            #update current view and render
             self.current_ball_index += 1
             self._paint_balls()
+
+        # test for the last ball already
         except IndexError:
             self.current_ball_index -= 1
             self.drawn_number -= 1
             self.ui.statusBar.showMessage(
                 "Already at the last generated ball", 2000
             )
+        
+        # test for ball pool not existing
         except AttributeError:
             self.ui.statusBar.showMessage(
                 "Cannot go to next ball; no ball pool!", 2000
             )
 
+    # grab values from settings fields and assign to class attributes
     def _load_settings(self):
         self.balls_min = int(self.settings_window.ui.range_min.value())
         self.balls_max = int(self.settings_window.ui.range_max.value())
         self.balls_sample = int(self.settings_window.ui.sample.value())
 
+    # the render function - updates the main ball view
+    # and the status dots
     def _paint_balls(self):
+        # set ball number and code name to current draw
         self.ui.ballNumber.setText(str(
             self.this_sample[self.current_ball_index].value)
         )
@@ -170,24 +191,32 @@ class MainWindow(QMainWindow):
             self.this_sample[self.current_ball_index].code)
         )
 
+        # clear any status bar messages that might exist
         self.ui.statusBar.clearMessage()
 
+        # iterate through every status dot
         for index in range(self.ui.drawnBallContainer.count()):
-            icon = self.ui.drawnBallContainer.itemAt(index).widget()
+            status_dot = self.ui.drawnBallContainer.itemAt(index).widget()
+            # if the dot represents a ball that has been drawn...
             if index <= self.drawn_number:
+                # if it is equal to the current user view, set to 
+                # 'current' icon design and set mode to current
                 if index == self.current_ball_index:
-                    icon.setPixmap(Pixmaps.CURRENT.value)
+                    status_dot.setPixmap(Pixmaps.CURRENT.value)
                     self.ui.modeText.setText("Current")
+                # else set to 'recall'
+                # icon design and set mode to recall
                 else:
-                    icon.setPixmap(Pixmaps.DRAWN.value)
+                    status_dot.setPixmap(Pixmaps.DRAWN.value)
                     self.ui.modeText.setText("Recall")
+            # ret to not trawn (grey) icon
             else:
-                icon.setPixmap(Pixmaps.NOT_DRAWN.value)
+                status_dot.setPixmap(Pixmaps.NOT_DRAWN.value)
 
 
 if __name__ == "__main__":
     MainWindow = MainWindow()
 
-    # start app
+    # show the main window and exec QT
     MainWindow.show()
     sys.exit(app.exec())
