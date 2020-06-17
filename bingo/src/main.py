@@ -1,6 +1,7 @@
 import sys
 import csv
-from PyQt5.QtWidgets import QApplication, QDialog, QLabel, QPushButton
+from PyQt5.QtWidgets import QApplication, QDialog, QLabel, QPushButton, QMainWindow, QSpacerItem
+from PyQt5 import QtCore
 from enum import Enum
 
 from ballgenerator import BallGenerator
@@ -15,72 +16,145 @@ app = QApplication(sys.argv)
 
 
 class Pixmaps(Enum):
-    PAST = QPixmap("bingo/resources/disc.svg")
-    CURRENT = QPixmap("bingo/resources/circle.svg")
-    FUTURE = QPixmap("bingo/resources/circle grey.svg")
+    DRAWN = QPixmap("bingo/resources/drawn.svg")
+    CURRENT = QPixmap("bingo/resources/current.svg")
+    NOT_DRAWN = QPixmap("bingo/resources/not-drawn.svg")
+
+class SettingsWindow(QDialog):
+    def __init__(self, parent=None):
+        super().__init__()
+        
+        self.ui = settings.Ui_Balls()
+        self.ui.setupUi(self)
+
+class MainWindow(QMainWindow):
+    def __init__(self, parent=None):
+        super().__init__()
+        
+        self.ui = main.Ui_MainWindow()
+        self.ui.setupUi(self)
+
+        self.ui.ballName.hide()
+        self.ui.ballNumber.hide()
+        self.ui.modeText.setText("None")
+
+        self.settings_window = SettingsWindow()
+        self._load_settings()
+        self.ui.settings_3.clicked.connect(self.settings)
+        self.ui.newDraw.clicked.connect(self.new_ball_pool)
+        self.ui.forward.clicked.connect(self.next_ball)
+        self.ui.back.clicked.connect(self.prev_ball)
+        self.ui.recall.clicked.connect(self.recall)
+
+    
+    @QtCore.pyqtSlot()
+    def settings(self):
+        self.settings_window.exec()
+        self._load_settings()
+
+        self.ui.statusBar.showMessage("Settings edited. Changes will apply for next ball pool", 3000)
 
 
-def new_ball_pool():
-
-    bg = BallGenerator((int(settings_window.ui.range_min.value()), int(settings_window.ui.range_max.value())))
-    bg.set_codes_path(codes)
-    main_window.this_sample = list(bg.generate(int(settings_window.ui.sample.value())))
-
-    for index, ball in enumerate(main_window.this_sample):
-        icon = QLabel(str(index))
-        icon.setPixmap(Pixmaps.FUTURE.value)
-        main_window.ui.drawnBallContainer.addWidget(icon)
-
-    main_window.current_ball_index = 0
-    paint_balls()
+    @QtCore.pyqtSlot()
+    def recall(self):
+        self.current_ball_index = 0
+        self._paint_balls()
 
 
-def paint_balls():
+    def _load_settings(self):
+        self.balls_min = int(self.settings_window.ui.range_min.value())
+        self.balls_max = int(self.settings_window.ui.range_max.value())
+        self.balls_sample = int(self.settings_window.ui.sample.value())
+        # self.show_bingo_codes = self.settings_window.ui.checkBox.value()
 
-    main_window.ui.ballNumber.setText(str(main_window.this_sample[main_window.current_ball_index].value))
+        #if self.show_bingo_codes:
+        #    self.ui.ballName.hide()
+        # else:
+        #    self.ui.ballName.show()
 
-    for index in range(main_window.ui.drawnBallContainer.count()):
-        icon = main_window.ui.drawnBallContainer.itemAt(index).widget()
-        if index < main_window.current_ball_index:
-            icon.setPixmap(Pixmaps.PAST.value)
-        elif index == main_window.current_ball_index:
-            icon.setPixmap(Pixmaps.CURRENT.value)
-        else:
-            icon.setPixmap(Pixmaps.FUTURE.value)
+    def _paint_balls(self):
+        self.ui.ballNumber.setText(str(self.this_sample[self.current_ball_index].value))
+        self.ui.ballName.setText(str(self.this_sample[self.current_ball_index].code))
+
+        self.ui.statusBar.clearMessage()
+
+        for index in range(self.ui.drawnBallContainer.count()):
+            icon = self.ui.drawnBallContainer.itemAt(index).widget()
+            if index <= self.drawn_number:
+                if index == self.current_ball_index:
+                    icon.setPixmap(Pixmaps.CURRENT.value)
+                    self.ui.modeText.setText("Current")
+                else:
+                    icon.setPixmap(Pixmaps.DRAWN.value)
+                    self.ui.modeText.setText("Recall")
+            else:
+                icon.setPixmap(Pixmaps.NOT_DRAWN.value)
 
 
+    @QtCore.pyqtSlot()
+    def new_ball_pool(self):
 
-def next_ball():
-    main_window.current_ball_index += 1
-    paint_balls()
+        self.ui.ballNumber.show()
+        self.ui.ballName.show()
+        container = self.ui.drawnBallContainer
 
-def prev_ball():
-    main_window.current_ball_index -= 1
-    paint_balls()
+        # use setParent to delete old widgets (once a widget has no parent it is deleted)
+        for index in reversed(range(container.count())):
+            container.itemAt(index).widget().setParent(None)
 
+        self.ui.statusBar.showMessage("Generated new ball pool", 2000)
+
+        bg = BallGenerator((self.balls_min, self.balls_max))
+        bg.set_codes_path(codes)
+        self.this_sample = list(bg.generate(self.balls_sample))
+
+        for ball in self.this_sample:
+            icon = QLabel()
+            icon.setPixmap(Pixmaps.NOT_DRAWN.value)
+            self.ui.drawnBallContainer.addWidget(icon)
+
+        # main_window.ui.drawnBallContainer.addWidget(QSpacerItem())
+
+        self.current_ball_index = 0
+        self.drawn_number = 0
+
+        self._paint_balls()
+
+
+    @QtCore.pyqtSlot()
+    def prev_ball(self):
+        if self.current_ball_index == 0:
+            self.ui.statusBar.showMessage("Already at the first generated ball", 2000)
+            return
+        
+        try:
+            self.current_ball_index -= 1
+            self._paint_balls()
+        except AttributeError:
+            self.ui.statusBar.showMessage("Cannot go to previous ball; no ball pool!", 2000)
+
+
+    @QtCore.pyqtSlot()
+    def next_ball(self):
+        try:
+            if self.drawn_number == self.current_ball_index:
+                self.drawn_number += 1
+            self.current_ball_index += 1
+            self._paint_balls()
+        except IndexError:
+            self.current_ball_index -= 1
+            self.drawn_number -= 1
+            self.ui.statusBar.showMessage("Already at the last generated ball", 2000)
+        except AttributeError:
+            self.ui.statusBar.showMessage("Cannot go to next ball; no ball pool!", 2000)
 
 if __name__ == "__main__":
 
     bggenerator = None
 
+    MainWindow = MainWindow()
 
-
-    # main window setup
-    main_window = QDialog()
-    main_window.ui = main.Ui_MainWindow()
-    main_window.ui.setupUi(main_window)
-
-    # settings window setup
-    settings_window = QDialog()
-    settings_window.ui = settings.Ui_Balls()
-    settings_window.ui.setupUi(settings_window)
-
-    # signal slots
-    main_window.ui.settings_3.clicked.connect(settings_window.exec)
-    main_window.ui.newDraw.clicked.connect(new_ball_pool)
-    main_window.ui.forward.clicked.connect(next_ball)
-    main_window.ui.back.clicked.connect(prev_ball)
 
     # start app
-    main_window.show()
+    MainWindow.show()
     sys.exit(app.exec())
