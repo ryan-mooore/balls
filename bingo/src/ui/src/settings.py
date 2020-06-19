@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import \
     QApplication, QDialog, QLabel, QPushButton, QMainWindow
 from PyQt5 import QtCore
 
-from ..generated import settings
+from bingo.src.ui.generated import settings
 
 
 # create a class that extends the auto-generated settings window class
