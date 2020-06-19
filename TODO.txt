@@ -1,6 +1,3 @@
 add history
 animations?
-pass testing
 disable buttons?
-
-pyuic5 -x [FILENAME].ui -o [FILENAME].py

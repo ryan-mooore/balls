@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'src/main.ui'
+# Form implementation generated from reading ui file 'bingo/src/ui/design/main.ui'
 #
 # Created by: PyQt5 UI code generator 5.14.2
 #
@@ -103,7 +103,7 @@ class Ui_MainWindow(object):
 "border: 0px;")
         self.back_2.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("src/../../../resources/icons/buttons/back.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("bingo/src/ui/design/../../../resources/icons/buttons/back.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.back_2.setIcon(icon)
         self.back_2.setIconSize(QtCore.QSize(32, 32))
         self.back_2.setObjectName("back_2")
@@ -114,7 +114,7 @@ class Ui_MainWindow(object):
 "border: 0px;")
         self.settings_3.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("src/../../../resources/icons/buttons/settings.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap("bingo/src/ui/design/../../../resources/icons/buttons/settings.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.settings_3.setIcon(icon1)
         self.settings_3.setIconSize(QtCore.QSize(32, 32))
         self.settings_3.setObjectName("settings_3")
@@ -133,7 +133,7 @@ class Ui_MainWindow(object):
 "border: 0px;")
         self.newDraw.setText("")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("src/../../../resources/icons/buttons/new.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap("bingo/src/ui/design/../../../resources/icons/buttons/new.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.newDraw.setIcon(icon2)
         self.newDraw.setIconSize(QtCore.QSize(32, 32))
         self.newDraw.setObjectName("newDraw")
@@ -143,7 +143,7 @@ class Ui_MainWindow(object):
 "border: 0px;")
         self.back.setText("")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("src/../../../resources/icons/buttons/previous.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap("bingo/src/ui/design/../../../resources/icons/buttons/previous.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.back.setIcon(icon3)
         self.back.setIconSize(QtCore.QSize(32, 32))
         self.back.setObjectName("back")
@@ -153,7 +153,7 @@ class Ui_MainWindow(object):
 "border: 0px;")
         self.forward.setText("")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("src/../../../resources/icons/buttons/next.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap("bingo/src/ui/design/../../../resources/icons/buttons/next.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.forward.setIcon(icon4)
         self.forward.setIconSize(QtCore.QSize(32, 32))
         self.forward.setObjectName("forward")
@@ -170,7 +170,7 @@ class Ui_MainWindow(object):
 "border: 0px;")
         self.recall.setText("")
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("src/../../../resources/icons/buttons/recall.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon5.addPixmap(QtGui.QPixmap("bingo/src/ui/design/../../../resources/icons/buttons/recall.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.recall.setIcon(icon5)
         self.recall.setIconSize(QtCore.QSize(32, 32))
         self.recall.setObjectName("recall")
@@ -182,7 +182,7 @@ class Ui_MainWindow(object):
 "border: 0px;")
         self.delete_2.setText("")
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("src/../../../resources/icons/buttons/delete.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon6.addPixmap(QtGui.QPixmap("bingo/src/ui/design/../../../resources/icons/buttons/delete.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.delete_2.setIcon(icon6)
         self.delete_2.setIconSize(QtCore.QSize(32, 32))
         self.delete_2.setObjectName("delete_2")
@@ -243,13 +243,3 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow", "Mode: "))
         self.modeText.setToolTip(_translate("MainWindow", "Current viewing mode"))
         self.modeText.setText(_translate("MainWindow", "Text"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())

@@ -9,6 +9,7 @@ from PyQt5 import QtCore
 
 from ..generated import settings
 
+
 # create a class that extends the auto-generated settings window class
 class SettingsWindow(QDialog):
     def __init__(self, parent=None):

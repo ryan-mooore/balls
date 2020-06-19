@@ -1,9 +1,16 @@
 # AS91896
+![](images/screenshot.png)
+
 
 ## Installation
 Dependencies found in [pipfile](Pipfile)
+I reccommend using `pipenv` for running the program as it automatically installs all the necessary dependencies - just run `pipenv sync` in the root directory. Otherwise, just install the packages in [pipfile](Pipfile) manually.
 
 ## Running
-Because of the fact that QtDesigner is really stupid, you have to run the [main.py](bingo/main.py) file from the ui directory ([bingo/src/ui](bingo/src/ui)). If you do not run the script from here the GUI resources will not load and it won't look good.
+Run the following command in the root directory:
 
-i.e. run `python ../main.py` from [bingo/src/ui](bingo/src/ui) with the correct dependencies installed
+### With pipenv:
+`pipenv run python -m bingo.src.main`
+
+### Without pipenv:
+`python -m bingo.src.main`

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'src/settings.ui'
+# Form implementation generated from reading ui file 'bingo/src/ui/design/settings.ui'
 #
 # Created by: PyQt5 UI code generator 5.14.2
 #
@@ -99,13 +99,3 @@ class Ui_Balls(object):
         self.label_2.setText(_translate("Balls", "Select"))
         self.label_3.setText(_translate("Balls", "Balls"))
         self.checkBox.setText(_translate("Balls", "Use bingo codes"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Balls = QtWidgets.QDialog()
-    ui = Ui_Balls()
-    ui.setupUi(Balls)
-    Balls.show()
-    sys.exit(app.exec_())

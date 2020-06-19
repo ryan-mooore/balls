@@ -3,31 +3,41 @@ from os import path
 from enum import Enum
 
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import \
-    QApplication, QDialog, QLabel, QPushButton, QMainWindow
+from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow
 from PyQt5 import QtCore
 
-from ..generated import main
-from . import settings
+from bingo.src.ui.generated import main
+
+from bingo.src.ui.src.settings import SettingsWindow
+from bingo.src.ballgenerator import BallGenerator
 
 
 # create an enum for the pixmaps for the drawn balls
 # status dots (in the top left or the window)
-class Pixmaps(Enum):
-    def create_pixmap(p):
-        return path.normpath(path.join(
-            path.dirname(__file__), p
-        ))
+class STATUS_DOTS(Enum):
 
-    DRAWN     = create_pixmap("../../../resources/icons/status-dots/drawn.svg")
-    CURRENT   = create_pixmap("../../../resources/icons/status-dots/current.svg")
-    NOT_DRAWN = create_pixmap("../../resources/icons/status-dots/not-drawn.svg")
+    # for some reason a QApplication instance needs
+    # to exist to cerate a QPixmap
+    _ = QApplication(sys.argv)
+
+    # creates a pixmap from the filename given
+    def create_pixmap(file):
+        return QPixmap((path.normpath(path.join(
+            path.dirname(__file__),
+            "../../../resources/icons/status-dots/",
+            file
+        ))))
+
+    # assign to enum values
+    DRAWN = create_pixmap("drawn.svg")
+    CURRENT = create_pixmap("current.svg")
+    NOT_DRAWN = create_pixmap("not-drawn.svg")
 
 
 # class that extends the auto-generated main window class
 # this class includes all of its own event slots
 class MainWindow(QMainWindow):
-    def __init__(self, parent=None, settings_window=None, ball_generator=None, codes_path=None):
+    def __init__(self, parent=None):
         # initialise the QDialog class
         super().__init__()
 
@@ -41,15 +51,12 @@ class MainWindow(QMainWindow):
         self.ui.ballNumber.hide()
         self.ui.modeText.setText("None")
 
-        self.BallGenerator = ball_generator
-        self.codes_path = codes_path
         self.ball_pool = None
 
-        # bind the settings window to the main window class and
+        # bind a settings window instance to the main window class and
         # load the current settings (the defaults in this case)
-        if settings_window:
-            self.settings_window = settings_window
-            self._load_settings()
+        self.settings_window = SettingsWindow()
+        self._load_settings()
 
         # connect signals to the slot functions
         self.ui.settings_3.clicked.connect(self.settings)
@@ -105,14 +112,15 @@ class MainWindow(QMainWindow):
             container.itemAt(index).widget().setParent(None)
 
         # create new ball generator class
-        bg = self.BallGenerator((self.balls_min, self.balls_max))
-        bg.set_codes_path(self.codes_path)
+        bg = BallGenerator((self.balls_min, self.balls_max))
+        bg.set_codes_path("../resources/bingo.csv")
 
         # create sample generator using settings values
         try:
             self.ball_pool = list(bg.generate(self.balls_sample))
         except ValueError:
-            self.ui.statusBar.showMessage("Incorrect values in settings!", 2000)
+            self.ui.statusBar.showMessage(
+                "Incorrect values in settings!", 2000)
             self.ui.ballName.hide()
             self.ui.ballNumber.hide()
             return
@@ -123,7 +131,7 @@ class MainWindow(QMainWindow):
         # for each ball, assigning the not drawn (grey) pixmap
         for ball in self.ball_pool:
             status_dot = QLabel()
-            status_dot.setPixmap(QPixmap(Pixmaps.NOT_DRAWN.value))
+            status_dot.setPixmap(STATUS_DOTS.NOT_DRAWN.value)
             self.ui.drawnBallContainer.addWidget(status_dot)
 
         # set the current view index and
@@ -188,10 +196,10 @@ class MainWindow(QMainWindow):
 
     # grab values from settings fields and assign to class attributes
     def _load_settings(self):
-        self.balls_min    = int(self.settings_window.ui.range_min.value())
-        self.balls_max    = int(self.settings_window.ui.range_max.value())
+        self.balls_min = int(self.settings_window.ui.range_min.value())
+        self.balls_max = int(self.settings_window.ui.range_max.value())
         self.balls_sample = int(self.settings_window.ui.sample.value())
-        self.use_codes        = self.settings_window.ui.checkBox.isChecked()
+        self.use_codes = self.settings_window.ui.checkBox.isChecked()
 
     # the render function - updates the main ball view
     # and the status dots
@@ -212,13 +220,13 @@ class MainWindow(QMainWindow):
                 # if it is equal to the current user view, set to
                 # 'current' icon design and set mode to current
                 if index == self.current_ball_index:
-                    status_dot.setPixmap(QPixmap(Pixmaps.CURRENT.value))
+                    status_dot.setPixmap(STATUS_DOTS.CURRENT.value)
                     self.ui.modeText.setText("Current")
                 # else set to 'recall'
                 # icon design and set mode to recall
                 else:
-                    status_dot.setPixmap(QPixmap(Pixmaps.DRAWN.value))
+                    status_dot.setPixmap(STATUS_DOTS.DRAWN.value)
                     self.ui.modeText.setText("Recall")
             # ret to not trawn (grey) icon
             else:
-                status_dot.setPixmap(QPixmap(Pixmaps.NOT_DRAWN.value))
+                status_dot.setPixmap(STATUS_DOTS.NOT_DRAWN.value)
