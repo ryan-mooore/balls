@@ -21,7 +21,7 @@ class Pixmaps(Enum):
 
     DRAWN     = create_pixmap("../../../resources/icons/status-dots/drawn.svg")
     CURRENT   = create_pixmap("../../../resources/icons/status-dots/current.svg")
-    NOT_DRAWN = create_pixmap("../../../resources/icons/status-dots/not-drawn.svg")
+    NOT_DRAWN = create_pixmap("../../resources/icons/status-dots/not-drawn.svg")
 
 
 # class that extends the auto-generated main window class
