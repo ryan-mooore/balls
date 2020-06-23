@@ -13,9 +13,10 @@ from bingo.src.ui.src.main import MainWindow
 __version__ = "3.0.0"
 __path__ = ""
 
-if __name__ == "__main__":
+
+def run():
     # create QApplication
     app = QApplication(sys.argv)
-    MainWindow = MainWindow()
-    MainWindow.show()
+    Window = MainWindow()
+    Window.show()
     sys.exit(app.exec())
